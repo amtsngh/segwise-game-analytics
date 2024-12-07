@@ -3,7 +3,8 @@ from services import GameDataService
 import requests
 import csv
 from io import StringIO
-from utils import parse_date, parse_csv_data
+from utils import parse_csv_data
+from models import get_connection
 
 def register_routes(app):
 
