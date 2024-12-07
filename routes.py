@@ -10,9 +10,18 @@ def register_routes(app):
 
     @app.route('/data', methods=['POST'])
     def get_game_data():
-        req = request.json
-        results, row_count = GameDataService.get_data(req)
-        return jsonify({"data": results, "rowCount": row_count})
+        try:
+            req = request.json
+            results, row_count = GameDataService.get_data(req)
+            return jsonify({
+                "message": "Data fetched successfully",
+                "data": {"rows": results, "rowCount": row_count}
+            })
+        except Exception as e:
+            return jsonify({
+                "message": f"Error occurred: {str(e)}",
+                "data": None
+            }), 500
 
     @app.route('/upload-csv', methods=['POST'])
     def upload_csv():
@@ -21,12 +30,18 @@ def register_routes(app):
             data = request.json
             csv_link = data.get('csv_link')
             if not csv_link:
-                return jsonify({"error": "CSV link is required."}), 400
+                return jsonify({
+                    "message": "CSV link is required.",
+                    "data": None
+                }), 400
 
             # Download the CSV file
             response = requests.get(csv_link)
             if response.status_code != 200:
-                return jsonify({"error": "Failed to download the CSV file."}), 400
+                return jsonify({
+                    "message": "Failed to download the CSV file.",
+                    "data": None
+                }), 400
 
             # Read and process CSV data
             csv_content = StringIO(response.text)
@@ -55,7 +70,13 @@ def register_routes(app):
                     cursor.execute(insert_query, row)
                 connection.commit()
 
-            return jsonify({"message": "CSV data successfully uploaded."}), 200
+            return jsonify({
+                "message": "CSV data successfully uploaded.",
+                "data": None
+            }), 200
 
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            return jsonify({
+                "message": f"Error occurred: {str(e)}",
+                "data": None
+            }), 500

@@ -12,7 +12,6 @@ instance/
 venv/
 .env/
 .venv/
-segwise-game-analytics/
 
 # Ignore IDE/editor-specific files
 .idea/
