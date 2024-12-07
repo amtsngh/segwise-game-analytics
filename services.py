@@ -12,8 +12,8 @@ class GameDataService:
             cursor.execute(sql)
             results = cursor.fetchall()
             columns = [desc[0] for desc in cursor.description]
-            row_count = GameDataService.get_row_count(req, results)
             results_for_page = GameDataService.cut_results_to_page_size(req, results)
+            row_count = len(results_for_page)
         results_as_dicts = [dict(zip(columns, row)) for row in results_for_page]
         return results_as_dicts, row_count
 
@@ -72,7 +72,8 @@ class GameDataService:
         filter_type = item.get('filterType')
         filter_type_map = {
             'text': GameDataService.create_text_filter_sql,
-            'number': GameDataService.create_number_filter_sql
+            'number': GameDataService.create_number_filter_sql,
+            'array': GameDataService.create_array_filter_sql
         }
         return filter_type_map.get(filter_type, lambda k, i: 'TRUE')(key, item)
 
@@ -100,6 +101,38 @@ class GameDataService:
             'endsWith': f"{key} LIKE '%{item['filter']}'"
         }
         return type_map.get(item.get('type'), 'TRUE')
+    
+    @staticmethod
+    def create_array_filter_sql(key, item):
+        # Possible filter 'type' values: equals, notEqual, contains, notContains, startsWith, endsWith, etc.
+        # We'll support a subset. If you need more complex logic, adjust accordingly.
+        filter_value = item['filter']
+        condition_type = item.get('type')
+        
+        # Convert field to jsonb explicitly
+        jsonb_field = f"{key}::jsonb"
+        
+        # For 'equals', we want rows where the array contains the element exactly:
+        if condition_type == 'equals':
+            # exact match of an element
+            return f"{jsonb_field} @> '[\"{filter_value}\"]'"
+        
+        elif condition_type == 'notEqual':
+            # array does not contain the element
+            return f"NOT ({jsonb_field} @> '[\"{filter_value}\"]')"
+        
+        elif condition_type == 'contains':
+            # If 'contains' means partial match of element strings, we must cast to text:
+            # This is a looser condition: it will match any occurrence in the JSON representation.
+            # For strict element checks, better to parse and query differently.
+            return f"{key}::text LIKE '%{filter_value}%'"
+        
+        elif condition_type == 'notContains':
+            return f"{key}::text NOT LIKE '%{filter_value}%'"
+
+        # If nothing else matches, just return TRUE as a fallback
+        return 'TRUE'
+
 
     @staticmethod
     def create_group_by_sql(req):
