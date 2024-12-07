@@ -1,0 +1,183 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API documentation for your Flask App",
+    "version": "1.0.0",
+    "title": "Game Data API"
+  },
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/upload-csv": {
+      "post": {
+        "summary": "Upload CSV file link",
+        "description": "Uploads a CSV file from a given link and stores/updates data.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "request",
+            "description": "Request payload containing CSV link",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "csv_link": {
+                  "type": "string",
+                  "example": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSCtraqtnsdYd4FgEfqKsHMR2kiwqX1H9uewvAbuqBmOMSZqTAkSEXwPxWK_8uYQap5omtMrUF1UJAY/pub?gid=1439814054&single=true&output=csv"
+                }
+              },
+              "required": ["csv_link"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CSV data successfully uploaded."
+          },
+          "400": {
+            "description": "Invalid input or failed to download CSV."
+          },
+          "500": {
+            "description": "Server error."
+          }
+        }
+      }
+    },
+    "/data": {
+      "post": {
+        "summary": "Fetch game data with filtering, sorting, and pagination",
+        "description": "Returns filtered and paginated game data based on given parameters.",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "description": "Bearer token for authorization",
+            "required": false
+          },
+          {
+            "in": "body",
+            "name": "request",
+            "description": "Request payload for fetching game data with filters, sorting, and paging",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "startRow": {
+                  "type": "integer",
+                  "example": 0,
+                  "description": "Starting row index for pagination"
+                },
+                "endRow": {
+                  "type": "integer",
+                  "example": 10,
+                  "description": "Ending row index for pagination"
+                },
+                "rowGroupCols": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "example": [],
+                  "description": "Columns to group rows by (if any)"
+                },
+                "groupKeys": {
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "example": [],
+                  "description": "Keys for groups if hierarchical grouping is used"
+                },
+                "filterModel": {
+                  "type": "object",
+                  "description": "Object where each key represents a column filter. For example: 'supported_languages'.",
+                  "example": {
+                    "supported_languages": {
+                      "filterType": "array",
+                      "type": "contains",
+                      "filter": "Russ",
+                      "filterTo": "2014-03-03"
+                    }
+                  },
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "filterType": {
+                        "type": "string",
+                        "description": "Type of filter (e.g. 'array', 'text')"
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Filter condition (e.g. 'contains', 'equals')"
+                      },
+                      "filter": {
+                        "type": "string",
+                        "description": "Filter value"
+                      },
+                      "filterTo": {
+                        "type": "string",
+                        "description": "Additional filter value (e.g. for range filters)"
+                      }
+                    }
+                  }
+                },
+                "sortModel": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "colId": {
+                        "type": "string",
+                        "description": "Column ID to sort on"
+                      },
+                      "sort": {
+                        "type": "string",
+                        "enum": ["asc", "desc"],
+                        "description": "Sort direction"
+                      }
+                    }
+                  },
+                  "example": []
+                }
+              },
+              "required": ["startRow", "endRow"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data fetched successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": { "type": "object" }
+                    },
+                    "rowCount": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error occurred."
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "definitions": {},
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your Bearer token in the format **Bearer &lt;token&gt;**"
+    }
+  }
+}
