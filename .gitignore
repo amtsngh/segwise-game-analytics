@@ -1,0 +1,25 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore environment variables file
+.env
+
+# Ignore Flask instance folder
+instance/
+
+# Ignore virtual environment folders
+venv/
+.env/
+.venv/
+segwise-game-analytics/
+
+# Ignore IDE/editor-specific files
+.idea/
+.vscode/
+
+# Ignore log files
+*.log
+
+# Ignore compiled Cython files
+*.cpython-*
