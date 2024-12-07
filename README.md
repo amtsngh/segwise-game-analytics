@@ -1,5 +1,5 @@
 
-# Game Data Management System
+# Segwise Game Analytics
 
 This is a Flask-based web application designed for managing and querying game data. The system connects to a PostgreSQL database, supports uploading game data from a CSV file, and provides an API to retrieve the data with various filters and sorting capabilities.
 
@@ -41,8 +41,8 @@ To get started with this project, you need to set up a few things:
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/game-data-management.git
-cd game-data-management
+git clone https://github.com/yourusername/segwise-game-analytics.git
+cd segwise-game-analytics
 ```
 
 ### Step 2: Set up a Virtual Environment
@@ -57,7 +57,7 @@ Activate the virtual environment:
 
 - On **Windows**:
   ```bash
-  venv\Scriptsctivate
+  venv\Scripts\activate
   ```
 
 - On **macOS/Linux**:
@@ -187,7 +187,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
 
 ```json
 {
-  "csv_link": "https://example.com/game_data.csv"
+  "csv_link": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSCtraqtnsdYd4FgEfqKsHMR2kiwqX1H9uewvAbuqBmOMSZqTAkSEXwPxWK_8uYQap5omtMrUF1UJAY/pub?gid=1439814054&single=true&output=csv"
 }
 ```
 
@@ -208,7 +208,7 @@ The server will download the CSV file, parse it, and insert the data into the da
 Here’s an overview of the project structure:
 
 ```
-/game_data_project
+/segwise-game-analytics
 │
 ├── app.py               # Main entry point for the Flask app
 ├── config.py            # Configuration file (for DB, secret keys, etc.)
