@@ -291,7 +291,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "release_date": {
       "filterType": "date",
       "type": "equals",
-      "filter": "0",
+      "filter": "2021-06-15",
       "filterTo": ""
     }
   },
@@ -311,7 +311,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "release_date": {
       "filterType": "date",
       "type": "notEqual",
-      "filter": "0",
+      "filter": "2021-06-15",
       "filterTo": ""
     }
   },
@@ -331,7 +331,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "price": {
       "release_date": "date",
       "type": "greaterThan",
-      "filter": "0",
+      "filter": "2021-06-15",
       "filterTo": ""
     }
   },
@@ -351,7 +351,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "price": {
       "release_date": "date",
       "type": "greaterThanOrEqual",
-      "filter": "0",
+      "filter": "2021-06-15",
       "filterTo": ""
     }
   },
@@ -371,7 +371,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "price": {
       "release_date": "date",
       "type": "lessThan",
-      "filter": "0",
+      "filter": "2021-06-15",
       "filterTo": ""
     }
   },
@@ -391,7 +391,7 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "release_date": {
       "filterType": "date",
       "type": "lessThanOrEqual",
-      "filter": "0",
+      "filter": "2021-06-15",
       "filterTo": ""
     }
   },
@@ -411,8 +411,128 @@ The API allows interaction with the game data stored in the PostgreSQL database.
     "release_date": {
       "filterType": "date",
       "type": "inRange",
-      "filter": "0",
-      "filterTo": "10"
+      "filter": "2021-06-15",
+      "filterTo": "2022-06-15"
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Text (Equals)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "filterType": "text",
+      "type": "equals",
+      "filter": "Pension Day",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Text (Not Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "filterType": "text",
+      "type": "notEqual",
+      "filter": "Pension Day",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Text (Contains)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "filterType": "text",
+      "type": "contains",
+      "filter": "Day",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Text (Not Contains)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "filterType": "text",
+      "type": "notContains",
+      "filter": "Day",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Text (Starts With)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "filterType": "text",
+      "type": "startsWith",
+      "filter": "Day",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Text (Ends With)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "filterType": "text",
+      "type": "endsWith",
+      "filter": "Day",
+      "filterTo": ""
     }
   },
   "sortModel": []
