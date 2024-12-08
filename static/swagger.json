@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "API documentation for your Flask App",
+    "description": "This is a Flask-based web application designed for managing and querying game data. The system connects to a PostgreSQL database, supports uploading game data from a CSV file, and provides an API to retrieve the data with various filters and sorting capabilities.",
     "version": "1.0.0",
     "title": "Segwise Game Analytics"
   },
