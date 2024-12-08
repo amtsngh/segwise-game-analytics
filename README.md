@@ -234,3 +234,17 @@ Here’s an overview of the project structure:
 - **`requirements.txt`**: Lists all the required Python packages.
 
 ---
+
+### Cost of Running in Production (Approximation):
+
+If you choose to deploy this system in a production environment using an AWS t2.medium instance (2 vCPU, 4GB RAM) and 50GB of EBS storage, and run it continuously for 30 days, the approximate monthly cost would be:
+
+t2.medium Instance (24x7 for 30 days): ~USD 33.4/month
+50GB EBS Storage: ~USD 5/month
+Total in USD: ~USD 38.4/month
+In INR (assuming 1 USD ≈ 83 INR):
+
+~38.4 * 83 = ~3,187.2 INR (≈3,200 INR per month)
+This estimate assumes minimal data transfer costs and a negligible increase in price from the one file upload and 100 queries per day. Actual costs may vary based on region, reserved instances, and other factors.
+
+---
