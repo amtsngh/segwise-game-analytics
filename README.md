@@ -3,6 +3,7 @@
 
 This is a Flask-based web application designed for managing and querying game data. The system connects to a PostgreSQL database, supports uploading game data from a CSV file, and provides an API to retrieve the data with various filters and sorting capabilities.
 
+[Swagger API Documentation](http://15.207.86.7:5000/swagger)
 ---
 
 ## Features
