@@ -41,7 +41,7 @@ To get started with this project, you need to set up a few things:
 Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/segwise-game-analytics.git
+git clone https://github.com/amtsngh/segwise-game-analytics.git
 cd segwise-game-analytics
 ```
 
@@ -197,6 +197,7 @@ The server will download the CSV file, parse it, and insert the data into the da
 
 ```json
 {
+  "data": null,
   "message": "CSV data successfully uploaded."
 }
 ```
@@ -217,6 +218,9 @@ Here’s an overview of the project structure:
 ├── routes.py            # Routes for the application
 ├── utils.py             # Utility functions (e.g., CSV parsing, date formatting)
 └── requirements.txt     # Dependencies for the app
+└── Dockerfile           # Docker config for the app
+└── Static               
+    └── swagger.json     # Swagger config
 ```
 
 ### Key Files and Directories:
