@@ -170,7 +170,7 @@
                   "items": {
                     "type": "string"
                   },
-                  "example": [],
+                  "example": ["0.99"],
                   "description": "Keys for groups if hierarchical grouping is used"
                 },
                 "filterModel": {
