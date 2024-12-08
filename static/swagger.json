@@ -294,7 +294,11 @@
             "description": "Server error occurred."
           }
         },
-        "security": []
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     }
   },
