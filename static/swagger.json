@@ -6,9 +6,15 @@
     "title": "Game Data API"
   },
   "basePath": "/",
-  "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/login": {
       "post": {
@@ -32,7 +38,10 @@
                   "example": "password"
                 }
               },
-              "required": ["username", "password"]
+              "required": [
+                "username",
+                "password"
+              ]
             }
           }
         ],
@@ -83,7 +92,9 @@
                   "example": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSCtraqtnsdYd4FgEfqKsHMR2kiwqX1H9uewvAbuqBmOMSZqTAkSEXwPxWK_8uYQap5omtMrUF1UJAY/pub?gid=1439814054&single=true&output=csv"
                 }
               },
-              "required": ["csv_link"]
+              "required": [
+                "csv_link"
+              ]
             }
           }
         ],
@@ -120,7 +131,7 @@
           {
             "in": "body",
             "name": "request",
-            "description": "Request payload for fetching game data with filters, sorting, and paging",
+            "description": "Request payload for fetching data with filters, sorting, and paging",
             "required": true,
             "schema": {
               "type": "object",
@@ -132,42 +143,68 @@
                 },
                 "endRow": {
                   "type": "integer",
-                  "example": 10,
+                  "example": 100,
                   "description": "Ending row index for pagination"
                 },
                 "rowGroupCols": {
                   "type": "array",
-                  "items": { "type": "string" },
-                  "example": [],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "example": "price",
+                        "description": "Column field to group rows by"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "field": "price"
+                    }
+                  ],
                   "description": "Columns to group rows by (if any)"
                 },
                 "groupKeys": {
                   "type": "array",
-                  "items": { "type": "string" },
+                  "items": {
+                    "type": "string"
+                  },
                   "example": [],
                   "description": "Keys for groups if hierarchical grouping is used"
                 },
                 "filterModel": {
                   "type": "object",
-                  "description": "Object where each key represents a column filter.",
-                  "example": {
-                    "supported_languages": {
-                      "filterType": "array",
-                      "type": "contains",
-                      "filter": "Russ",
-                      "filterTo": "2014-03-03"
-                    }
-                  },
+                  "description": "Filters applied to columns. Each key represents a column.",
                   "additionalProperties": {
                     "type": "object",
                     "properties": {
                       "filterType": {
                         "type": "string",
-                        "description": "Type of filter (e.g. 'array', 'text')"
+                        "enum": [
+                          "number",
+                          "text",
+                          "date",
+                          "array"
+                        ],
+                        "description": "Type of filter"
                       },
                       "type": {
                         "type": "string",
-                        "description": "Filter condition (e.g. 'contains', 'equals')"
+                        "enum": [
+                          "equals",
+                          "notEqual",
+                          "greaterThan",
+                          "greaterThanOrEqual",
+                          "lessThan",
+                          "lessThanOrEqual",
+                          "inRange",
+                          "contains",
+                          "notContains",
+                          "startsWith",
+                          "endsWith"
+                        ],
+                        "description": "Filter condition"
                       },
                       "filter": {
                         "type": "string",
@@ -175,8 +212,21 @@
                       },
                       "filterTo": {
                         "type": "string",
-                        "description": "Additional filter value (e.g. for range filters)"
+                        "description": "Additional filter value for range filters"
                       }
+                    },
+                    "required": [
+                      "filterType",
+                      "type",
+                      "filter"
+                    ]
+                  },
+                  "example": {
+                    "price": {
+                      "filterType": "number",
+                      "type": "greaterThan",
+                      "filter": "0",
+                      "filterTo": ""
                     }
                   }
                 },
@@ -191,15 +241,26 @@
                       },
                       "sort": {
                         "type": "string",
-                        "enum": ["asc", "desc"],
+                        "enum": [
+                          "asc",
+                          "desc"
+                        ],
                         "description": "Sort direction"
                       }
                     }
                   },
-                  "example": []
+                  "example": [
+                    {
+                      "sort": "asc",
+                      "colId": "price"
+                    }
+                  ]
                 }
               },
-              "required": ["startRow", "endRow"]
+              "required": [
+                "startRow",
+                "endRow"
+              ]
             }
           }
         ],
@@ -209,15 +270,21 @@
             "schema": {
               "type": "object",
               "properties": {
-                "message": { "type": "string" },
+                "message": {
+                  "type": "string"
+                },
                 "data": {
                   "type": "object",
                   "properties": {
                     "rows": {
                       "type": "array",
-                      "items": { "type": "object" }
+                      "items": {
+                        "type": "object"
+                      }
                     },
-                    "rowCount": { "type": "integer" }
+                    "rowCount": {
+                      "type": "integer"
+                    }
                   }
                 }
               }
