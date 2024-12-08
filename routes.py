@@ -1,3 +1,6 @@
+import datetime
+import jwt
+from functools import wraps
 from flask import request, jsonify
 from services import GameDataService
 import requests
@@ -8,7 +11,58 @@ from models import get_connection
 
 def register_routes(app):
 
+    # Set the secret key for JWT. In production, keep this secret and safe.
+    app.config['SECRET_KEY'] = 'your_secret_key_here'
+
+    def token_required(f):
+        @wraps(f)
+        def decorated(*args, **kwargs):
+            token = None
+
+            # JWT is expected to be in the Authorization header in the format: Bearer <token>
+            if 'Authorization' in request.headers:
+                auth_header = request.headers['Authorization']
+                parts = auth_header.split()
+                if len(parts) == 2 and parts[0].lower() == 'bearer':
+                    token = parts[1]
+
+            if not token:
+                return jsonify({"message": "Token is missing!"}), 401
+
+            try:
+                data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+                # Optionally, you can store and check user info from data if needed.
+            except jwt.ExpiredSignatureError:
+                return jsonify({"message": "Token has expired!"}), 401
+            except jwt.InvalidTokenError:
+                return jsonify({"message": "Invalid token!"}), 401
+
+            return f(*args, **kwargs)
+        return decorated
+
+    @app.route('/login', methods=['POST'])
+    def login():
+        # Expecting JSON with username and password
+        auth_data = request.get_json()
+        if not auth_data or 'username' not in auth_data or 'password' not in auth_data:
+            return jsonify({"message": "Username and password required"}), 400
+
+        username = auth_data['username']
+        password = auth_data['password']
+
+        # Hardcoded credentials check
+        if username == "username" and password == "password":
+            # Create a token with an expiration
+            token = jwt.encode({
+                'user': username,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+            }, app.config['SECRET_KEY'], algorithm="HS256")
+            return jsonify({"message": "Login successful", "token": token}), 200
+        else:
+            return jsonify({"message": "Invalid credentials"}), 401
+
     @app.route('/data', methods=['POST'])
+    @token_required
     def get_game_data():
         try:
             req = request.json
@@ -24,6 +78,7 @@ def register_routes(app):
             }), 500
 
     @app.route('/upload-csv', methods=['POST'])
+    @token_required
     def upload_csv():
         try:
             # Get the CSV link from the request
@@ -91,7 +146,6 @@ def register_routes(app):
                         genres = EXCLUDED.genres,
                         tags = EXCLUDED.tags;
                 """
-                # Use psycopg2's execute_values for bulk insert
                 from psycopg2.extras import execute_values
                 execute_values(cursor, insert_query, values)
                 connection.commit()
