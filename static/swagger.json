@@ -3,7 +3,7 @@
   "info": {
     "description": "API documentation for your Flask App",
     "version": "1.0.0",
-    "title": "Game Data API"
+    "title": "Segwise Game Analytics"
   },
   "basePath": "/",
   "schemes": [
