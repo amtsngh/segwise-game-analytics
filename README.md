@@ -633,3 +633,9 @@ In INR (assuming 1 USD ≈ 83 INR):
 This estimate assumes minimal data transfer costs and a negligible increase in price from the one file upload and 100 queries per day. Actual costs may vary based on region, reserved instances, and other factors.
 
 ---
+
+### Assumptions:
+
+Any field can be nullable except for AppID in the input CSV.
+
+---
