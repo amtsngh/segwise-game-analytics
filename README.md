@@ -139,19 +139,283 @@ The API allows interaction with the game data stored in the PostgreSQL database.
 - **Method**: `POST`
 - **Description**: Fetches game data based on various filtering, grouping, and sorting parameters.
 
-##### Request Body (JSON format)
+##### Request Body : Number (Equals)
 
 ```json
 {
   "startRow": 0,
   "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
   "filterModel": {
-    "Name": {"filterType": "text", "type": "contains", "filter": "Game"},
-    "Price": {"filterType": "number", "type": "greaterThan", "filter": 10}
+    "price": {
+      "filterType": "number",
+      "type": "equals",
+      "filter": "0",
+      "filterTo": ""
+    }
   },
-  "sortModel": [{"colId": "Price", "sort": "asc"}],
-  "rowGroupCols": [{"field": "Genres"}],
-  "groupKeys": []
+  "sortModel": []
+}
+```
+
+##### Request Body : Number (Not Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "filterType": "number",
+      "type": "notEqual",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Number (Greater Than)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "filterType": "number",
+      "type": "greaterThan",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Number (Greater Than or Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "filterType": "number",
+      "type": "greaterThanOrEqual",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Number (Less Than)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "filterType": "number",
+      "type": "lessThan",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Number (Less Than or Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "filterType": "number",
+      "type": "lessThanOrEqual",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Number (In Range)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "filterType": "number",
+      "type": "inRange",
+      "filter": "0",
+      "filterTo": "10"
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (Equals)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "release_date": {
+      "filterType": "date",
+      "type": "equals",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (Not Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "release_date": {
+      "filterType": "date",
+      "type": "notEqual",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (Greater Than)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "release_date": "date",
+      "type": "greaterThan",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (Greater Than or Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "release_date": "date",
+      "type": "greaterThanOrEqual",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (Less Than)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "price": {
+      "release_date": "date",
+      "type": "lessThan",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (Less Than or Equal)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "release_date": {
+      "filterType": "date",
+      "type": "lessThanOrEqual",
+      "filter": "0",
+      "filterTo": ""
+    }
+  },
+  "sortModel": []
+}
+```
+
+##### Request Body : Date (In Range)
+
+```json
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "groupKeys": [],
+  "filterModel": {
+    "release_date": {
+      "filterType": "date",
+      "type": "inRange",
+      "filter": "0",
+      "filterTo": "10"
+    }
+  },
+  "sortModel": []
 }
 ```
 

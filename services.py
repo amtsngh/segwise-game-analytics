@@ -73,7 +73,8 @@ class GameDataService:
         filter_type_map = {
             'text': GameDataService.create_text_filter_sql,
             'number': GameDataService.create_number_filter_sql,
-            'array': GameDataService.create_array_filter_sql
+            'array': GameDataService.create_array_filter_sql,
+            'date': GameDataService.create_date_filter_sql
         }
         return filter_type_map.get(filter_type, lambda k, i: 'TRUE')(key, item)
 
@@ -99,6 +100,20 @@ class GameDataService:
             'notContains': f"{key} NOT LIKE '%{item['filter']}%'",
             'startsWith': f"{key} LIKE '{item['filter']}%'",
             'endsWith': f"{key} LIKE '%{item['filter']}'"
+        }
+        return type_map.get(item.get('type'), 'TRUE')
+    
+    @staticmethod
+    def create_date_filter_sql(key, item):
+        # Assuming the item contains a filter type like 'equals', 'greaterThan', etc.
+        type_map = {
+            'equals': f"{key} = '{item['filter']}'",
+            'notEqual': f"{key} != '{item['filter']}'",
+            'greaterThan': f"{key} > '{item['filter']}'",
+            'greaterThanOrEqual': f"{key} >= '{item['filter']}'",
+            'lessThan': f"{key} < '{item['filter']}'",
+            'lessThanOrEqual': f"{key} <= '{item['filter']}'",
+            'inRange': f"({key} >= '{item['filter']}' AND {key} <= '{item['filterTo']}')"
         }
         return type_map.get(item.get('type'), 'TRUE')
     
