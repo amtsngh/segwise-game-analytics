@@ -23,7 +23,6 @@ This is a Flask-based web application designed for managing and querying game da
    - [Running the Application](#running-the-application)
    - [Using the API](#using-the-api)
 4. [Project Structure](#project-structure)
-5. [License](#license)
 
 ---
 
